@@ -23,9 +23,26 @@ export default function Array2() {
   ];
 
   const [notes, setNotes] = useState(initNotes);
+
+  const [value1, setValue1] = useState("");
+  const [value2, setValue2] = useState("");
+  const [value3, setValue3] = useState("");
+
   function remItem(id) {
     setNotes(notes.filter((note) => note.id !== id));
   }
+  let id = Math.random();
+
+  function addItem() {
+    let obj = {
+      id: id,
+      prop1: value1,
+      prop2: value2,
+      prop3: value3
+    };
+    setNotes([...notes, obj]);
+  }
+
   const result = notes.map((note) => {
     return (
       <p key={note.id}>
@@ -40,10 +57,19 @@ export default function Array2() {
     <div>
       {result}
       <br />
-      <input type="text" />
-      <input type="text" />
-      <input type="text" />
-      <button>save</button>
+      <input
+        value={value1}
+        onChange={(event) => setValue1(event.currentTarget.value)}
+      />
+      <input
+        value={value2}
+        onChange={(event) => setValue2(event.currentTarget.value)}
+      />
+      <input
+        value={value3}
+        onChange={(event) => setValue3(event.currentTarget.value)}
+      />
+      <button onClick={addItem}>save</button>
     </div>
   );
 }
