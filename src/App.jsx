@@ -1,12 +1,13 @@
 import Map from "./components/13.12.21/Map";
-import Array1 from "./components/14.12.21/Array1";
+import Array2 from "./components/15.12.21/Array2";
 import "./styles.css";
 
 export default function App() {
+  //<Map />
+  //<Array1 />
   return (
     <div>
-      <Map />
-      <Array1 />
+      <Array2 />
     </div>
   );
 }
