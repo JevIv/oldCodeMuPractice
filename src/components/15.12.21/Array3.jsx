@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 
 export default function Array3() {
+  let id = Math.random();
   const initNotes = [
     {
-      id: 1234,
+      id: id,
       prop1: "value1",
       prop2: "value2",
       prop3: "value3"
     },
     {
-      id: 4567,
+      id: id,
       prop1: "value1.2",
       prop2: "value2.2",
       prop3: "value3.2"
     },
     {
-      id: 7890,
+      id: id,
       prop1: "value1.3",
       prop2: "value2.3",
       prop3: "value3.3"
@@ -24,26 +25,28 @@ export default function Array3() {
 
   const [notes, setNotes] = useState(initNotes);
 
-  const [value1, setValue1] = useState("");
-  const [value2, setValue2] = useState("");
-  const [value3, setValue3] = useState("");
+  const [obj, setObj] = useState(getInitObj());
 
   function remItem(id) {
     setNotes(notes.filter((note) => note.id !== id));
   }
-  let id = Math.random();
+
+  function getInitObj() {
+    return {
+      id: id,
+      prop1: "",
+      prop2: "",
+      prop3: ""
+    };
+  }
 
   function addItem() {
-    let obj = {
-      id: id,
-      prop1: value1,
-      prop2: value2,
-      prop3: value3
-    };
     setNotes([...notes, obj]);
-    setValue1("");
-    setValue2("");
-    setValue3("");
+    setObj(getInitObj());
+  }
+
+  function changeProp(prop, event) {
+    setObj({ ...obj, [prop]: event.currentTarget.value });
   }
 
   const result = notes.map((note) => {
@@ -61,17 +64,17 @@ export default function Array3() {
       {result}
       <br />
       <input
-        value={value1}
-        onChange={(event) => setValue1(event.currentTarget.value)}
+        value={obj.prop1}
+        onChange={(event) => changeProp("prop1", event)}
       />
       <input
-        value={value2}
-        onChange={(event) => setValue2(event.currentTarget.value)}
+        value={obj.prop2}
+        onChange={(event) => changeProp("prop2", event)}
       />
       <input
-        value={value3}
+        value={obj.prop3}
         onChange={(event) => {
-          setValue3(event.currentTarget.value);
+          changeProp("prop3", event);
           event.currentTarget.value = "";
         }}
       />

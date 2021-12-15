@@ -41,6 +41,9 @@ export default function Array2() {
       prop3: value3
     };
     setNotes([...notes, obj]);
+    setValue1("");
+    setValue2("");
+    setValue3("");
   }
 
   const result = notes.map((note) => {
