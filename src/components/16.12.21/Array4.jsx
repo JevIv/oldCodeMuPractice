@@ -24,60 +24,57 @@ export default function Array3() {
   ];
 
   const [notes, setNotes] = useState(initNotes);
-
-  const [obj, setObj] = useState(getInitObj());
-
-  function remItem(id) {
-    setNotes(notes.filter((note) => note.id !== id));
-  }
-
-  function getInitObj() {
-    return {
-      id: id,
-      prop1: "",
-      prop2: "",
-      prop3: ""
-    };
-  }
-
-  function addItem() {
-    setNotes([...notes, obj]);
-    setObj(getInitObj());
-  }
-
-  function changeProp(prop, event) {
-    setObj({ ...obj, [prop]: event.currentTarget.value });
-  }
+  const [editID, setEditID] = useState(null);
 
   const result = notes.map((note) => {
     return (
       <p key={note.id}>
         <span>{note.prop1}</span>,<span> {note.prop2}</span>,
         <span> {note.prop3}</span>,
-        <button onClick={() => remItem(note.id)}>remove</button>
+        <button
+          onClick={() => {
+            setEditID(note.id);
+          }}>
+          edit
+        </button>
       </p>
     );
   });
 
+  function getValue(prop) {
+    return notes.reduce(
+      (res, note) => (note.id === editID ? note[prop] : res),
+      ""
+    );
+  }
+
+  function changeItem(prop, event) {
+    setNotes(
+      notes.map((note) =>
+        note.id === editID
+          ? { ...note, [prop]: event.currentTarget.value }
+          : note
+      )
+    );
+  }
+
   return (
     <div>
       {result}
+      <input
+        value={getValue("prop1")}
+        onChange={(event) => changeItem("prop1", event)}
+      />
+      <input
+        value={getValue("prop2")}
+        onChange={(event) => changeItem("prop1", event)}
+      />
+      <input
+        value={getValue("prop3")}
+        onChange={(event) => changeItem("prop1", event)}
+      />
       <br />
-      <input
-        value={obj.prop1}
-        onChange={(event) => changeProp("prop1", event)}
-      />
-      <input
-        value={obj.prop2}
-        onChange={(event) => changeProp("prop2", event)}
-      />
-      <input
-        value={obj.prop3}
-        onChange={(event) => {
-          changeProp("prop3", event);
-        }}
-      />
-      <button onClick={addItem}>save</button>
+      <button onClick={() => setEditID(null)}>save</button>
     </div>
   );
 }
